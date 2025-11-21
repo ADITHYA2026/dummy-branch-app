@@ -1,0 +1,6 @@
+format: table
+severity:
+  - UNKNOWN
+  - HIGH
+  - CRITICAL
+exit-code: 1

@@ -7,3 +7,4 @@ class Config:
         "DATABASE_URL",
         "postgresql+psycopg2://postgres:postgres@db:5432/microloans",
     )
+    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")

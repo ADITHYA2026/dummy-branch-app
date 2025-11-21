@@ -1,0 +1,18 @@
+services:
+  db:
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: microloans
+    ports:
+      - "5432:5432"
+
+  api:
+    environment:
+      FLASK_ENV: development
+      DATABASE_URL: postgresql+psycopg2://postgres:postgres@db:5432/microloans
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: gunicorn -w 2 -b 0.0.0.0:8000 --reload wsgi:app

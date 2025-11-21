@@ -1,0 +1,27 @@
+services:
+  db:
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-microloans}
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-microloans}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    environment:
+      FLASK_ENV: production
+      DATABASE_URL: postgresql+psycopg2://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-microloans}
+      LOG_LEVEL: INFO
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
